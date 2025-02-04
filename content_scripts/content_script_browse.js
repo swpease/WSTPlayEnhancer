@@ -11,16 +11,6 @@ function hide_durations() {
 }
 
 
-// Is this needed anymore?
-function setup_section_callback() {
-    let targetNode = document.querySelector("p.listing__result-count");
-    let section_observer = new MutationObserver((mutationList, observer) => {
-        hide_durations();
-    });
-    section_observer.observe(targetNode, { subtree: true, characterData: true });
-}
-
-
 // Setup an observer on DOM element 'main' if on the path '/videos/browse'.
 function setup_main_observer() {
     let maybe_browse_str = document.location.pathname.split('/').pop();
@@ -31,7 +21,6 @@ function setup_main_observer() {
         // the addition of all those match tiles.
         let targetNode = document.querySelector("main");
         let main_observer = new MutationObserver((mutationList, observer) => {
-            // setup_section_callback();
             hide_durations();
         });
         main_observer.observe(targetNode, { childList: true, subtree: true });
@@ -57,7 +46,6 @@ function main() {
     href_observer.observe(body, { childList: true, subtree: true });
 
     // hide all new ones that arise after user clicks "Load more"
-    // setup_section_callback();
     setup_main_observer();
 }
 
