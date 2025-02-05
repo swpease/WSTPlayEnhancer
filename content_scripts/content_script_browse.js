@@ -20,13 +20,17 @@ function hide_durations() {
 
 // Hide duration info on the video being watched.
 function hide_video_controls() {
-    let vid_progress_control = document.querySelector(".vjs-progress-control");
-    let vid_remaining_time = document.querySelector(".vjs-remaining-time");
-    if (vid_progress_control) {
-        vid_progress_control.remove();
-    }
-    if (vid_remaining_time) {
-        vid_remaining_time.remove();
+    // Only want it on non-live videos.
+    let path = document.location.pathname;
+    if (!path.includes("live")) {
+        let vid_progress_control = document.querySelector(".vjs-progress-control");
+        let vid_remaining_time = document.querySelector(".vjs-remaining-time");
+        if (vid_progress_control) {
+            vid_progress_control.remove();
+        }
+        if (vid_remaining_time) {
+            vid_remaining_time.remove();
+        }
     }
 }
 
