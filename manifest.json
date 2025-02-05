@@ -9,7 +9,14 @@
     "content_scripts": [
       {
         "matches": ["*://www.wst.tv/*"],
-        "js": ["content_scripts/content_script_browse.js"]
+        "js": [
+            "content_scripts/content_script_browse.js",
+            "content_scripts/content_script_storage.js"
+        ]
       }
+    ],
+
+    "permissions": [
+      "storage"
     ]
   }
