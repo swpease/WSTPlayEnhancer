@@ -4,49 +4,66 @@
 
 // Hide the durations.
 function hide_durations() {
-    let durations = document.querySelectorAll(".article-card__duration")
+    // On video thumbnails.
+    let durations = document.querySelectorAll(".article-card__duration");
     for (let dur of durations) {
         dur.remove();
+    }
+
+    // On video info below the video being watched.
+    let vid_duration = document.querySelector(".viewer-container__duration");
+    if (vid_duration) {
+        vid_duration.remove();
     }
 }
 
 
-// Setup an observer on DOM element 'main' if on the path '/videos/browse'.
-function setup_main_observer() {
-    let maybe_browse_str = document.location.pathname.split('/').pop();
-    if (maybe_browse_str == "browse") {
-        // This fn is called prior to the DOM finishing loading;
-        // If you debug here, you'll see that the components of interest aren't
-        // yet there, so we listen for childList change, which will detect
-        // the addition of all those match tiles.
-        let targetNode = document.querySelector("main");
+// Hide duration info on the video being watched.
+function hide_video_controls() {
+    let vid_progress_control = document.querySelector(".vjs-progress-control");
+    let vid_remaining_time = document.querySelector(".vjs-remaining-time");
+    if (vid_progress_control) {
+        vid_progress_control.remove();
+    }
+    if (vid_remaining_time) {
+        vid_remaining_time.remove();
+    }
+}
+
+
+// Setup an observer on DOM element 'body'.
+//
+// This fn gets called a decent number of times (10+) per navigation,
+// but doesn't seem to affect performance.
+function setup_observer() {
+    // This fn is called prior to the DOM finishing loading;
+    // If you debug here, you'll see that the components of interest aren't
+    // yet there, so we listen for childList change, which will detect
+    // the addition of all those match tiles.
+    let targetNode = document.querySelector("body");
+    if (targetNode) {
         let main_observer = new MutationObserver((mutationList, observer) => {
             hide_durations();
+            hide_video_controls();
         });
-        main_observer.observe(targetNode, { childList: true, subtree: true });
-        // Call for good measure. Precludes race condition issues.
-        hide_durations();
+        main_observer.observe(targetNode, { childList: true, subtree: true });    
+    } else {
+        setTimeout(setup_observer, 100);
     }
+
+    // I think unnecessary.
+    hide_durations();
+    hide_video_controls();
 }
 
 
 function main() {
-    // hide initial population
+    // Hide anything that populates after this fn runs.
+    setup_observer();
+
+    // Hide initial populations.
     hide_durations();
-
-    // Watch for URL path changes (interested in wst.tv/videos/browse)
-    let oldHref = document.location.href;
-    let body = document.querySelector('body');
-    let href_observer = new MutationObserver((mutationList, observer) => {
-      if (oldHref !== document.location.href) {
-        oldHref = document.location.href;
-        setup_main_observer();
-      }
-    });
-    href_observer.observe(body, { childList: true, subtree: true });
-
-    // hide all new ones that arise after user clicks "Load more"
-    setup_main_observer();
+    hide_video_controls();
 }
 
 
