@@ -31,6 +31,51 @@ function hide_video_controls() {
 }
 
 
+// Keyboard arrows-based seeking.
+function seek(event) {
+    if (["ArrowLeft", "ArrowRight"].includes(event.key)) {
+        let delta = event.shiftKey ? 300 : 10;  // Might tweak the 300s.
+        if (event.key == "ArrowLeft") {
+            delta = -1 * delta;
+        }
+        let video = document.querySelector("video");
+        let current_time = video.currentTime;
+        let new_current_time = current_time + delta;
+        if (new_current_time < 0) {
+            new_current_time = 0;
+        } else if (new_current_time > video.duration) {
+            new_current_time = current_time;
+        }
+        video.currentTime = new_current_time;
+    }
+}
+
+function toggle_pause_play(event) {
+    if (event.key == " ") {
+        event.preventDefault();  // Prevents scrolling.
+        let video = document.querySelector("video");
+        // video.paused ? video.play() : video.pause();
+        if (video.paused) {
+            video.play();
+        } else {
+            video.pause();
+        }
+    }
+}
+
+
+// Setup keyboard video seeking.
+function setup_keyboard_seek() {
+    let video = document.querySelector("video")
+    if (video) {
+        video.addEventListener('play', (event) => video.focus());
+        video.addEventListener('pause', (event) => video.focus());
+        video.addEventListener('keydown', seek);
+        video.addEventListener('keydown', toggle_pause_play);
+    }
+}
+
+
 // Setup an observer on DOM element 'body'.
 //
 // This fn gets called a decent number of times (10+) per navigation,
@@ -45,6 +90,8 @@ function setup_observer() {
         let main_observer = new MutationObserver((mutationList, observer) => {
             hide_durations();
             hide_video_controls();
+
+            setup_keyboard_seek();
         });
         main_observer.observe(targetNode, { childList: true, subtree: true });    
     } else {
