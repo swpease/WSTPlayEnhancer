@@ -17,7 +17,9 @@ function initialize_checkbox(checkbox) {
     let gettingHideDurations = browser.storage.local.get({ "hideDurations": false });
     gettingHideDurations.then(
         (result) => {
-            checkbox.checked = Object.values(result)[0];
+            if (Object.values(result)[0]) {
+                checkbox.setAttribute("checked", "checked");
+            }
         }, 
         (error) => console.log(error)
     );
