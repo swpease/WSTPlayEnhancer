@@ -5,6 +5,13 @@
   
     "description": "Enhances WST Play video playback.",
     "homepage_url": "https://github.com/swpease/WSTPlayEnhancer",
+
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "WSTPlayEnhancer@somethingelse.com",
+            "strict_min_version": "109.0"
+        }
+    },
   
     "content_scripts": [
       {
