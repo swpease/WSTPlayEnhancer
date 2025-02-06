@@ -84,7 +84,7 @@ function setup_keyboard_seek() {
 //
 // This fn gets called a decent number of times (10+) per navigation,
 // but doesn't seem to affect performance.
-function setup_observer() {
+function setup_observer(hideDurationsBool) {
     // This fn is called prior to the DOM finishing loading;
     // If you debug here, you'll see that the components of interest aren't
     // yet there, so we listen for childList change, which will detect
@@ -92,8 +92,10 @@ function setup_observer() {
     let targetNode = document.querySelector("body");
     if (targetNode) {
         let main_observer = new MutationObserver((mutationList, observer) => {
-            hide_durations();
-            hide_video_controls();
+            if (hideDurationsBool) {
+                hide_durations();
+                hide_video_controls();
+            }
 
             setup_keyboard_seek();
         });
@@ -103,19 +105,26 @@ function setup_observer() {
     }
 
     // I think unnecessary.
-    hide_durations();
-    hide_video_controls();
+    if (hideDurationsBool) {
+        hide_durations();
+        hide_video_controls();
+    }
 }
 
 
-function main() {
-    // Hide anything that populates after this fn runs.
-    setup_observer();
+function main(hideDurationsBool) {
+    setup_observer(hideDurationsBool);
 
     // Hide initial populations.
-    hide_durations();
-    hide_video_controls();
+    if (hideDurationsBool) {
+        hide_durations();
+        hide_video_controls();
+    }
 }
 
 
-main()
+const gettingHideDurations = browser.storage.local.get({ "hideDurations": false });
+gettingHideDurations.then(
+    (result) => main(Object.values(result)[0]), 
+    (error) => console.log(error)
+);
