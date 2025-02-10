@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "WST Play Enhancer",
-    "version": "0.10",
+    "version": "0.11",
   
     "description": "Enhances WST Play video playback.",
     "homepage_url": "https://github.com/swpease/WSTPlayEnhancer",
