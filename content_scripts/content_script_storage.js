@@ -1,7 +1,16 @@
 // Methods for storing/retrieving the times in videos
 // where you left off watching.
 
+
+// Chrome namespace
+if (!('browser' in globalThis)) {
+    globalThis.browser = globalThis.chrome;
+  }
+
+
+// GLOBALS
 let CURRENT_VIDEO_ID = "";
+
 
 /**
  * Pointless error handler

@@ -1,3 +1,9 @@
+// Chrome namespace
+if (!('browser' in globalThis)) {
+    globalThis.browser = globalThis.chrome;
+  }
+
+
 const CHECKBOX = document.getElementById("hide-durations");
 
 

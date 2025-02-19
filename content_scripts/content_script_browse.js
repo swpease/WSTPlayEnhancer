@@ -2,6 +2,12 @@
 // that you can watch in the video archive (wst.tv/videos/browse).
 
 
+// Chrome namespace
+if (!('browser' in globalThis)) {
+    globalThis.browser = globalThis.chrome;
+  }
+
+
 // Hide the durations.
 function hide_durations() {
     // On video thumbnails.
