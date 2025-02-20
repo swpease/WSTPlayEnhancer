@@ -1,0 +1,38 @@
+{
+    "manifest_version": 3,
+    "name": "WST Play Enhancer",
+    "version": "0.1",
+  
+    "description": "Enhances WST Play video playback.",
+    "homepage_url": "https://github.com/swpease/WSTPlayEnhancer",
+
+    "minimum_chrome_version": "88",
+  
+    "content_scripts": [
+      {
+        "matches": ["*://www.wst.tv/*"],
+        "js": [
+            "content_scripts/content_script_browse.js",
+            "content_scripts/content_script_storage.js"
+        ]
+      }
+    ],
+
+    "action": {
+        "default_icon": {
+            "16": "icons/icon16.png",
+            "32": "icons/icon32.png"
+          },
+        "default_title": "WST Play Enhancer",
+        "default_popup": "popup/popup.html"
+      },
+
+    "icons": {
+        "48": "icons/icon48.png",
+        "96": "icons/icon48@2x.png"
+    },
+
+    "permissions": [
+      "storage"
+    ]
+  }

@@ -1,0 +1,17 @@
+WHAT DATA IS COLLECTED
+WST Play Enhancer collects information on the videos that you, the user,
+watch on the WST Play service. Specifically, for any non-live videos you 
+watch, it collects the ID's and the time points where you were before 
+stopping viewing (closing the window, navigating away, etc.).
+
+WHY IS THIS DATA COLLECTED
+This information is used for the functionality related to resuming
+videos where you left off.
+
+WHERE IS IT COLLECTED
+This information is stored locally on your Chrome app. 
+
+WHO CAN SEE THIS DATA
+This data is not shared with any third party. It is not transmitted out 
+of your device in any way. We, the developers of WST Play Enhancer, 
+do not have access to it.
