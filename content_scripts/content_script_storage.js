@@ -39,7 +39,9 @@ function update_stored_time(video, video_id) {
  * @param {Object.<string, number>} result The video ID and stored currentTime.
  */
 function seek_to_last_saved_time(result) {
-    let video = document.querySelector("video");
+    // NB This call presumes its caller has verified the existence of mux-player.
+    // If `querySelector("mux-player")` returns `null`, there will be an error.
+    let video = document.querySelector("mux-player").shadowRoot.querySelector("mux-video").shadowRoot.querySelector("video");
     video.currentTime = Object.values(result)[0];
 }
 
@@ -51,10 +53,12 @@ function handle_time_storage() {
     // I feel like there's some sort of timing-based error lurking, but
     // it seems to work fine in practice. If I do hit an error, maybe put it
     // in a 'body' MO callback.
-    let video = document.querySelector("video");
+    let video_container = document.querySelector("mux-player");
     let path = document.location.pathname;
-    if (video && path.startsWith("/videos")) {
-        let video_id = path.split('/').pop();
+    let path_parts = path.split('/');
+    if ((video_container !== null) && path.startsWith("/videos") && (path_parts.length === 3)) {
+        let video = video_container.shadowRoot.querySelector("mux-video").shadowRoot.querySelector("video");
+        let video_id = path_parts[2];   // `path_parts` should be ["", "videos", {video ID}]
         if (CURRENT_VIDEO_ID === video_id) {
             update_stored_time(video, video_id);
         } else {
