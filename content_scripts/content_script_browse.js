@@ -50,35 +50,6 @@ function hide_video_controls() {
 }
 
 
-// Keyboard arrows-based seeking.
-function seek(event) {
-    if (["ArrowLeft", "ArrowRight"].includes(event.key)) {
-        let delta = event.shiftKey ? 300 : 10;  // Might tweak the 300s.
-        if (event.key == "ArrowLeft") {
-            delta = -1 * delta;
-        }
-        let video = document.querySelector("video");
-        let current_time = video.currentTime;
-        let new_current_time = current_time + delta;
-        if (new_current_time < 0) {
-            new_current_time = 0;
-        } else if (new_current_time > video.duration) {
-            new_current_time = current_time;
-        }
-        video.currentTime = new_current_time;
-    }
-}
-
-
-// Setup keyboard video seeking.
-function setup_keyboard_seek() {
-    let video = document.querySelector("video")
-    if (video) {
-        video.addEventListener('keydown', seek);
-    }
-}
-
-
 // Setup an observer on DOM element 'body'.
 //
 // This fn gets called a decent number of times (10+) per navigation,
@@ -95,8 +66,6 @@ function setup_observer(hideDurationsBool) {
                 hide_durations();
                 hide_video_controls();
             }
-
-            setup_keyboard_seek();
         });
         main_observer.observe(targetNode, { childList: true, subtree: true });    
     } else {
