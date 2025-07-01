@@ -29,13 +29,22 @@ function hide_video_controls() {
     // Only want it on non-live videos.
     let path = document.location.pathname;
     if (!path.includes("live")) {
-        let vid_progress_control = document.querySelector(".vjs-progress-control");
-        let vid_remaining_time = document.querySelector(".vjs-remaining-time");
-        if (vid_progress_control) {
-            vid_progress_control.remove();
-        }
-        if (vid_remaining_time) {
-            vid_remaining_time.remove();
+        // I might be able to chain these .shadowRoot, .qS, and .remove calls if mux-player has
+        // media-time-range and mxp-time-display as components (vs loaded in
+        // dynamically), but unsure how to verify.
+        let video_container = document.querySelector("mux-player");
+        if (video_container !== null) {
+            let controls_container = video_container.shadowRoot.querySelector("media-theme-mux");
+            if (controls_container !== null) {
+                let vid_progress_control = controls_container.shadowRoot.querySelector("media-time-range");
+                let vid_remaining_time = controls_container.shadowRoot.querySelector("mxp-time-display");
+                if (vid_progress_control) {
+                    vid_progress_control.remove();
+                }
+                if (vid_remaining_time) {
+                    vid_remaining_time.remove();
+                }
+            }
         }
     }
 }
