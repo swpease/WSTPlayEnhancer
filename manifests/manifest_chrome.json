@@ -1,9 +1,9 @@
 {
     "manifest_version": 3,
     "name": "WST Play Enhancer",
-    "version": "0.1.1",
+    "version": "0.2.0",
   
-    "description": "Enhances the WST Play service's video playback with spoiler-free mode, resuming where you stopped, and more keyboard controls.",
+    "description": "Enhances the WST Play service's video playback with spoiler-free mode and resuming where you stopped.",
     "homepage_url": "https://github.com/swpease/WSTPlayEnhancer",
 
     "minimum_chrome_version": "88",
