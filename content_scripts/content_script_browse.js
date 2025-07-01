@@ -69,28 +69,12 @@ function seek(event) {
     }
 }
 
-function toggle_pause_play(event) {
-    if (event.key == " ") {
-        event.preventDefault();  // Prevents scrolling.
-        let video = document.querySelector("video");
-        // video.paused ? video.play() : video.pause();
-        if (video.paused) {
-            video.play();
-        } else {
-            video.pause();
-        }
-    }
-}
-
 
 // Setup keyboard video seeking.
 function setup_keyboard_seek() {
     let video = document.querySelector("video")
     if (video) {
-        video.addEventListener('play', (event) => video.focus());
-        video.addEventListener('pause', (event) => video.focus());
         video.addEventListener('keydown', seek);
-        video.addEventListener('keydown', toggle_pause_play);
     }
 }
 
