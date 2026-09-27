@@ -1,5 +1,5 @@
 // This file handles hiding the duration indicators for the matches
-// that you can watch in the video archive (wst.tv/videos/browse).
+// that you can watch in the video archive (play.wst.tv/videos/browse).
 
 
 // Chrome namespace
@@ -11,15 +11,9 @@ if (!('browser' in globalThis)) {
 // Hide the durations.
 function hide_durations() {
     // On video thumbnails.
-    let durations = document.querySelectorAll(".article-card__duration");
+    let durations = document.querySelectorAll("p.font-sans.text-2xs.p:not(.capitalize)");
     for (let dur of durations) {
         dur.remove();
-    }
-
-    // On video info below the video being watched.
-    let vid_duration = document.querySelector(".viewer-container__duration");
-    if (vid_duration) {
-        vid_duration.remove();
     }
 }
 
@@ -34,10 +28,10 @@ function hide_video_controls() {
         // dynamically), but unsure how to verify.
         let video_container = document.querySelector("mux-player");
         if (video_container !== null) {
-            let controls_container = video_container.shadowRoot.querySelector("media-theme-mux");
+            let controls_container = video_container.shadowRoot.querySelector("media-theme");
             if (controls_container !== null) {
                 let vid_progress_control = controls_container.shadowRoot.querySelector("media-time-range");
-                let vid_remaining_time = controls_container.shadowRoot.querySelector("mxp-time-display");
+                let vid_remaining_time = controls_container.shadowRoot.querySelector("media-time-display");
                 if (vid_progress_control) {
                     vid_progress_control.remove();
                 }
