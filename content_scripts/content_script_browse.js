@@ -28,6 +28,14 @@ function hide_video_controls() {
         // dynamically), but unsure how to verify.
         let video_container = document.querySelector("mux-player");
         if (video_container !== null) {
+            let video_element = video_container.shadowRoot.querySelector("mux-video").shadowRoot.querySelector("video");
+            // MutationObserver doesn't work for shadowDOM,
+            // and there's a delay to the controller elements loading,
+            // but they're definitely there upon play and mouseover.
+            // It would be cleaner to abstract the rest of this fn to another one,
+            // but also more nested and would entail repeated calls to shadowRoot, so...
+            video_element.addEventListener("play", hide_video_controls);
+            video_element.addEventListener("mouseover", hide_video_controls);
             let controls_container = video_container.shadowRoot.querySelector("media-theme");
             if (controls_container !== null) {
                 let vid_progress_control = controls_container.shadowRoot.querySelector("media-time-range");
